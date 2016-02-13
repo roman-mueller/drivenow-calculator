@@ -105,13 +105,25 @@ if (distance > 200) {
 var overCharge24=overChargeTime24+overChargeKm24;
 var total24=109+overCharge24;
 
+// what if you bought pre-paid minutes before the trip?
+// only makes sense if there weren't enough prepaid minutes in the account to
+// cover the whole trip
+var extraPrePaidText='';
+if ( deltaDuration > 0 ) {
+  var extraPrePaidCost=(driveDuration*0.27)+(parkDuration*parkCost)+addCost;
+  extraPrePaidText='If you buy a pre-paid package before the trip it would reduce the total cost to <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
+'( ' + driveDuration + ' pre-paid minutes * 0.27 Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>'; 
+}
+
 // results
 var text='You would be charged approximately <b>' + cost + ' Euro</b>.<br>' +
 'You would have ' + leftPrePaid + ' pre-paid minutes left afterwards.<br>' +
 '<br>' +
 'This trips total cost would be <b>' + fullCost.toFixed(2) + ' Euro</b>: <br>' +
 '( ' + deductPrePaid + ' pre-paid minutes * 0.27 Euro ) + ( ' + deltaDuration + ' standard driving minutes * ' + driveCost + ' Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>' +
+'<br>' +
 //var fullCost=(deductPrePaid*0.27)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+extraPrePaidText +
 '<br>' +
 'The 3 hour package would cost you 29.00 Euro + ' + overCharge3.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total3.toFixed(2) + ' Euro</b> <br>' +
 'The 6 hour package would cost you 54.00 Euro + ' + overCharge6.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total6.toFixed(2) + ' Euro</b> <br>' +
