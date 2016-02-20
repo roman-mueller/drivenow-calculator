@@ -2,7 +2,7 @@
 
 This project is a very simple, quick and dirty DriveNow cost calculator.  
 
-[Try it out here.](http://www.rm-it.de/drivenow-calculator/index.html)
+[Try it out here.](https://www.rm-it.de/drivenow-calculator/index.html)
 
 It is a early alpha version!  
 Always double check the result!
