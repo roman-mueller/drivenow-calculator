@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>DriveNow Kostenrechner</title>
+<script>
+function calculate(){
+var driveDuration=parseFloat(document.getElementById('driveDuration').value); 
+var parkDuration=parseFloat(document.getElementById('parkDuration').value); 
+var distance=parseFloat(document.getElementById('distance').value); 
+var driveCost=parseFloat(document.getElementById('driveCost').value); 
+var parkCost=parseFloat(document.getElementById('parkCost').value); 
+var prePaid=parseFloat(document.getElementById('prePaid').value); 
+
+if(distance > 200) {
+  var addCost=(distance-200)*0.29;
+  var deltaDistance=distance-200;
+} else {
+  var addCost=0;
+  var deltaDistance=0;
+}
+// flexible price + savings package
+if (prePaid > driveDuration) {
+  var deductPrePaid=driveDuration; 
+} else {
+  var deductPrePaid=prePaid;
+}
+
+var leftPrePaid=prePaid-driveDuration;
+if (leftPrePaid < 0) {
+  leftPrePaid=0;
+}
+
+var cost=((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+cost=cost.toFixed(2);
+
+var fullCost=(deductPrePaid*0.27)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+var deltaDuration=driveDuration-deductPrePaid;
+
+// hourly package
+// if you go over the pre-paid values its 0.29 Euro per km and 0.31 Euro per minute
+var totalDuration=driveDuration+parkDuration;
+
+// 3 hours / 80 km / 29 EUR
+if (totalDuration > 180) {
+  var overChargeTime3=(totalDuration-180)*0.31;
+} else {
+  var overChargeTime3=0;
+}
+
+if (distance > 80) {
+  var overChargeKm3=(distance-80)*0.29;
+} else {
+  var overChargeKm3=0;
+}
+
+var overCharge3=overChargeTime3+overChargeKm3;
+var total3=29+overCharge3;
+
+// 6 hours / 120 km / 54 EUR
+if (totalDuration > 360) {
+  var overChargeTime6=(totalDuration-360)*0.31;
+} else {
+  var overChargeTime6=0;
+}
+
+if (distance > 120) {
+  var overChargeKm6=(distance-120)*0.29;
+} else {
+  var overChargeKm6=0;
+}
+
+var overCharge6=overChargeTime6+overChargeKm6;
+var total6=54+overCharge6;
+
+// 9 hours / 200 km / 79 EUR
+if (totalDuration > 540) {
+  var overChargeTime9=(totalDuration-540)*0.31;
+} else {
+  var overChargeTime9=0;
+}
+
+if (distance > 200) {
+  var overChargeKm9=(distance-200)*0.29;
+} else {
+  var overChargeKm9=0;
+}
+
+var overCharge9=overChargeTime9+overChargeKm9;
+var total9=79+overCharge9;
+
+// 24 hours / 200 km / 109
+if (totalDuration > 1440) {
+  var overChargeTime24=(totalDuration-1440)*0.31;
+} else {
+  var overChargeTime24=0;
+}
+
+if (distance > 200) {
+  var overChargeKm24=(distance-200)*0.29;
+} else {
+  var overChargeKm24=0;
+}
+
+var overCharge24=overChargeTime24+overChargeKm24;
+var total24=109+overCharge24;
+
+// what if you bought pre-paid minutes before the trip?
+// only makes sense if there weren't enough prepaid minutes in the account to
+// cover the whole trip
+var extraPrePaidText='';
+if ( deltaDuration > 0 ) {
+  var extraPrePaidCost=(driveDuration*0.27)+(parkDuration*parkCost)+addCost;
+  extraPrePaidText='Wenn du ein pre-paid Paket kaufen w&uuml;rdest, w&uuml;rden sich die Gesamtkosten reduzieren auf <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
+'( ' + driveDuration + ' pre-paid Minuten * 0.27 Euro ) + ( ' + parkDuration + ' Minuten parken * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>';
+}
+
+// results
+var text='Dieser Trip kostet dich ca. <b>' + cost + ' Euro</b>.<br>' +
+'Du h&auml;ttest ' + leftPrePaid + ' pre-paid Minuten noch &uuml;brig danach.<br>' +
+'<br>' +
+'Der Trip w&uuml;rde ingesamt <b>' + fullCost.toFixed(2) + ' Euro</b> kosten: <br>' +
+'( ' + deductPrePaid + ' pre-paid Minuten * 0.27 Euro ) + ( ' + deltaDuration + ' standard fahr-Minuten * ' + driveCost + ' Euro ) + ( ' + parkDuration + ' Minuten parken * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>' +
+'<br>' +
+//var fullCost=(deductPrePaid*0.27)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+extraPrePaidText +
+'<br>' +
+'Das 3 Stunden Paket w&uuml;rde dich 29.00 Euro + ' + overCharge3.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total3.toFixed(2) + ' Euro</b> <br>' +
+'Das 6 Stunden Paket w&uuml;rde dich 54.00 Euro + ' + overCharge6.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total6.toFixed(2) + ' Euro</b> <br>' +
+'Das 9 Stunden Paket w&uuml;rde dich 79.00 Euro + ' + overCharge9.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total9.toFixed(2) + ' Euro</b> <br>' +
+'Das 24 Stunden Paket w&uuml;rde dich 109.00 Euro + ' + overCharge24.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total24.toFixed(2) + ' Euro</b> <br>' +
+'<br>';
+//'((' + driveDuration + '-' + deductPrePaid + ')*' + driveCost + ')+(' + parkDuration + '*' + parkCost + ')+' + addCost;
+
+document.getElementById('result').innerHTML=text;
+return false
+}
+</script>
+</head>
+<body>
+
+<h1>DriveNow Kostenrechner</h1>
+<b>Dieser Kostenrechner ist noch eine alpha version!<br>
+Bitte nicht 100%ig auf das Ergebnis verlassen!</b><br>
+<br>
+<br>
+<form>
+Fahrzeit: <input type="number" id="driveDuration" size="5" value="0"> Minuten <br>
+Parkzeit: <input type="number" id="parkDuration" size="5" value="0"> Minuten <br>
+Distanz: <input type="number" id="distance" size="5" value="0"> kilometer <br>
+<br>
+Fahrzeit des Autos kostet: <input type="number" id="driveCost" size="4" value="0.34"> Euro pro Minute<br>
+Parkzeit des Autos kostet: <input type="number" id="parkCost" size="4" value="0.15"> Euro pro Minute <br>
+<br>
+Ich habe noch <input type="number" id="prePaid" size="4" value="0"> pre-paid Minuten in meinem Account.<br>
+<br>
+<input type="button" value="Calculate" onClick="calculate()" >
+</form>
+<br>
+<br>
+<div id="result"></div>
+<br>
+<br>
+<br>
+<br>
+<br>
+Prices as of 2016-02-07 / German structure.<br>
+The prices are calculated as to my best understanding of the price structure.<br>
+It does not consider the "Savings Packages" as those are reoccurring fees that can only booked once per month.<br>
+If you found an error please create a issue on <a href="https://github.com/roman-mueller/drivenow-calculator">GitHub</a>.<br>
+No guarantees are given on the displayed prices!<br>
+Always double check the prices before booking.<br>
+This is a private project, I'm not affiliated with DriveNow in any way.<br>
+Please don't sue me.<br> 
+</body>
+</html>
