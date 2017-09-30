@@ -34,7 +34,7 @@ if (leftPrePaid < 0) {
 var cost=((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
 cost=cost.toFixed(2);
 
-var fullCost=(deductPrePaid*0.27)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
 var deltaDuration=driveDuration-deductPrePaid;
 
 // hourly package
@@ -110,9 +110,9 @@ var total24=109+overCharge24;
 // cover the whole trip
 var extraPrePaidText='';
 if ( deltaDuration > 0 ) {
-  var extraPrePaidCost=(driveDuration*0.27)+(parkDuration*parkCost)+addCost;
+  var extraPrePaidCost=(driveDuration*0.28)+(parkDuration*parkCost)+addCost;
   extraPrePaidText='If you buy a pre-paid package before the trip it would reduce the total cost to <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
-'( ' + driveDuration + ' pre-paid minutes * 0.27 Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>'; 
+'( ' + driveDuration + ' pre-paid minutes * 0.28 Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>'; 
 }
 
 // results
@@ -120,9 +120,9 @@ var text='You would be charged approximately <b>' + cost + ' Euro</b>.<br>' +
 'You would have ' + leftPrePaid + ' pre-paid minutes left afterwards.<br>' +
 '<br>' +
 'This trips total cost would be <b>' + fullCost.toFixed(2) + ' Euro</b>: <br>' +
-'( ' + deductPrePaid + ' pre-paid minutes * 0.27 Euro ) + ( ' + deltaDuration + ' standard driving minutes * ' + driveCost + ' Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>' +
+'( ' + deductPrePaid + ' pre-paid minutes * 0.28 Euro ) + ( ' + deltaDuration + ' standard driving minutes * ' + driveCost + ' Euro ) + ( ' + parkDuration + ' minutes parking * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>' +
 '<br>' +
-//var fullCost=(deductPrePaid*0.27)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+//var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
 extraPrePaidText +
 '<br>' +
 'The 3 hour package would cost you 29.00 Euro + ' + overCharge3.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total3.toFixed(2) + ' Euro</b> <br>' +
@@ -164,10 +164,10 @@ I have <input type="number" id="prePaid" size="4" value="0"> pre-paid minutes in
 <br>
 <br>
 <br>
-Prices as of 2016-02-07 / German structure.<br>
+Prices as of 2017-09-30 / German structure.<br>
 The prices are calculated as to my best understanding of the price structure.<br>
 It does not consider the "Savings Packages" as those are reoccurring fees that can only booked once per month.<br>
-If you found an error please create a issue on <a href="https://github.com/roman-mueller/drivenow-calculator">GitHub</a>.<br>
+If you found an error please create an issue on <a href="https://github.com/roman-mueller/drivenow-calculator">GitHub</a>.<br>
 No guarantees are given on the displayed prices!<br>
 Always double check the prices before booking.<br>
 This is a private project, I'm not affiliated with DriveNow in any way.<br>
