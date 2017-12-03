@@ -6,10 +6,8 @@
 <script>
 function calculate(){
 var driveDuration=parseFloat(document.getElementById('driveDuration').value); 
-var parkDuration=parseFloat(document.getElementById('parkDuration').value); 
 var distance=parseFloat(document.getElementById('distance').value); 
 var driveCost=parseFloat(document.getElementById('driveCost').value); 
-var parkCost=parseFloat(document.getElementById('parkCost').value); 
 var prePaid=parseFloat(document.getElementById('prePaid').value); 
 
 if(distance > 200) {
@@ -31,19 +29,19 @@ if (leftPrePaid < 0) {
   leftPrePaid=0;
 }
 
-var cost=((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+var cost=((driveDuration-deductPrePaid)*driveCost)+addCost;
 cost=cost.toFixed(2);
 
-var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+addCost;
 var deltaDuration=driveDuration-deductPrePaid;
 
 // hourly package
-// if you go over the pre-paid values its 0.29 Euro per km and 0.31 Euro per minute
-var totalDuration=driveDuration+parkDuration;
+// if you go over the pre-paid values its 0.29 Euro per km and $driveCost Euro per minute
+var totalDuration=driveDuration;
 
 // 3 hours / 80 km / 29 EUR
 if (totalDuration > 180) {
-  var overChargeTime3=(totalDuration-180)*0.31;
+  var overChargeTime3=(totalDuration-180)*driveCost;
 } else {
   var overChargeTime3=0;
 }
@@ -59,7 +57,7 @@ var total3=29+overCharge3;
 
 // 6 hours / 120 km / 54 EUR
 if (totalDuration > 360) {
-  var overChargeTime6=(totalDuration-360)*0.31;
+  var overChargeTime6=(totalDuration-360)*driveCost;
 } else {
   var overChargeTime6=0;
 }
@@ -75,7 +73,7 @@ var total6=54+overCharge6;
 
 // 9 hours / 200 km / 79 EUR
 if (totalDuration > 540) {
-  var overChargeTime9=(totalDuration-540)*0.31;
+  var overChargeTime9=(totalDuration-540)*driveCost;
 } else {
   var overChargeTime9=0;
 }
@@ -91,7 +89,7 @@ var total9=79+overCharge9;
 
 // 24 hours / 200 km / 109
 if (totalDuration > 1440) {
-  var overChargeTime24=(totalDuration-1440)*0.31;
+  var overChargeTime24=(totalDuration-1440)*driveCost;
 } else {
   var overChargeTime24=0;
 }
@@ -110,9 +108,9 @@ var total24=109+overCharge24;
 // cover the whole trip
 var extraPrePaidText='';
 if ( deltaDuration > 0 ) {
-  var extraPrePaidCost=(driveDuration*0.28)+(parkDuration*parkCost)+addCost;
+  var extraPrePaidCost=(driveDuration*0.28)+addCost;
   extraPrePaidText='Wenn du ein pre-paid Paket kaufen w&uuml;rdest, w&uuml;rden sich die Gesamtkosten reduzieren auf <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
-'( ' + driveDuration + ' pre-paid Minuten * 0.28 Euro ) + ( ' + parkDuration + ' Minuten parken * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>';
+'( ' + driveDuration + ' pre-paid Minuten * 0.28 Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>';
 }
 
 // results
@@ -120,9 +118,9 @@ var text='Dieser Trip kostet dich ca. <b>' + cost + ' Euro</b>.<br>' +
 'Du h&auml;ttest ' + leftPrePaid + ' pre-paid Minuten noch &uuml;brig danach.<br>' +
 '<br>' +
 'Der Trip w&uuml;rde ingesamt <b>' + fullCost.toFixed(2) + ' Euro</b> kosten: <br>' +
-'( ' + deductPrePaid + ' pre-paid Minuten * 0.28 Euro ) + ( ' + deltaDuration + ' standard fahr-Minuten * ' + driveCost + ' Euro ) + ( ' + parkDuration + ' Minuten parken * ' + parkCost + ' Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>' +
+'( ' + deductPrePaid + ' pre-paid Minuten * 0.28 Euro ) + ( ' + deltaDuration + ' standard fahr-Minuten * ' + driveCost + ' Euro ) + ( ' + deltaDistance + ' km welche nicht inklusive sind * 0.29 Euro ) <br>' +
 '<br>' +
-//var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+(parkDuration*parkCost)+addCost;
+//var fullCost=(deductPrePaid*0.28)+((driveDuration-deductPrePaid)*driveCost)+addCost;
 extraPrePaidText +
 '<br>' +
 'Das 3 Stunden Paket w&uuml;rde dich 29.00 Euro + ' + overCharge3.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total3.toFixed(2) + ' Euro</b> <br>' +
@@ -130,7 +128,7 @@ extraPrePaidText +
 'Das 9 Stunden Paket w&uuml;rde dich 79.00 Euro + ' + overCharge9.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total9.toFixed(2) + ' Euro</b> <br>' +
 'Das 24 Stunden Paket w&uuml;rde dich 109.00 Euro + ' + overCharge24.toFixed(2) + ' Euro &Uuml;berziehungskosten kosten, insgesamt: <b>' + total24.toFixed(2) + ' Euro</b> <br>' +
 '<br>';
-//'((' + driveDuration + '-' + deductPrePaid + ')*' + driveCost + ')+(' + parkDuration + '*' + parkCost + ')+' + addCost;
+//'((' + driveDuration + '-' + deductPrePaid + ')*' + driveCost + ')+' + addCost;
 
 document.getElementById('result').innerHTML=text;
 return false
@@ -146,11 +144,9 @@ Bitte nicht 100%ig auf das Ergebnis verlassen!</b><br>
 <br>
 <form>
 Fahrzeit: <input type="number" id="driveDuration" size="5" value="0"> Minuten <br>
-Parkzeit: <input type="number" id="parkDuration" size="5" value="0"> Minuten <br>
 Distanz: <input type="number" id="distance" size="5" value="0"> kilometer <br>
 <br>
-Fahrzeit des Autos kostet: <input type="number" id="driveCost" size="4" value="0.34"> Euro pro Minute<br>
-Parkzeit des Autos kostet: <input type="number" id="parkCost" size="4" value="0.15"> Euro pro Minute <br>
+Fahrzeit des Autos kostet: <input type="number" id="driveCost" size="4" value="0.33"> Euro pro Minute<br>
 <br>
 Ich habe noch <input type="number" id="prePaid" size="4" value="0"> pre-paid Minuten in meinem Account.<br>
 <br>
@@ -164,11 +160,14 @@ Ich habe noch <input type="number" id="prePaid" size="4" value="0"> pre-paid Min
 <br>
 <br>
 <br>
-Prices as of 2017-09-30 / German structure.<br>
+Prices as of 2017-12-03 / German structure.<br>
 The prices are calculated as to my best understanding of the price structure.<br>
 It does not consider the "Savings Packages" as those are reoccurring fees that can only booked once per month.<br>
 If you found an error please create an issue on <a href="https://github.com/roman-mueller/drivenow-calculator">GitHub</a> or send an e-Mail to: drivenow AT rm-it.de<br>
 No guarantees are given on the displayed prices!<br>
 Always double check the prices before booking.<br>
+<br>
+This is a private project, I'm not affiliated with DriveNow or BMW in any way.<br>
+Please don't sue me.<br>
 </body>
 </html>
