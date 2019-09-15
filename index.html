@@ -103,14 +103,31 @@ if (distance > 200) {
 var overCharge24=overChargeTime24+overChargeKm24;
 var total24=109+overCharge24;
 
+// 48 hours / 400 km / 199
+if (totalDuration > 2880) {
+  var overChargeTime48=(totalDuration-2880)*driveCost;
+} else {
+  var overChargeTime48=0;
+}
+
+if (distance > 400) {
+  var overChargeKm48=(distance-400)*0.29;
+} else {
+  var overChargeKm48=0;
+}
+
+var overCharge48=overChargeTime48+overChargeKm48;
+var total48=199+overCharge48;
+
 // what if you bought pre-paid minutes before the trip?
 // only makes sense if there weren't enough prepaid minutes in the account to
 // cover the whole trip
 var extraPrePaidText='';
 if ( deltaDuration > 0 ) {
   var extraPrePaidCost=(driveDuration*0.28)+addCost;
-  extraPrePaidText='If you buy a pre-paid package before the trip it would reduce the total cost to <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
-'( ' + driveDuration + ' pre-paid minutes * 0.28 Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) <br>'; 
+  extraPrePaidText='<del>If you buy a pre-paid package before the trip it would reduce the total cost to <b>' + extraPrePaidCost.toFixed(2) + ' Euro</b>: <br>' +
+'( ' + driveDuration + ' pre-paid minutes * 0.28 Euro ) + ( ' + deltaDistance + ' exceeding included km * 0.29 Euro ) </del><br>' +
+'Pre-paid packages are no longer available for purchase.<br>'; 
 }
 
 // results
@@ -127,6 +144,7 @@ extraPrePaidText +
 'The 6 hour package would cost you 54.00 Euro + ' + overCharge6.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total6.toFixed(2) + ' Euro</b> <br>' +
 'The 9 hour package would cost you 79.00 Euro + ' + overCharge9.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total9.toFixed(2) + ' Euro</b> <br>' +
 'The 24 hour package would cost you 109.00 Euro + ' + overCharge24.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total24.toFixed(2) + ' Euro</b> <br>' +
+'The 48 hour package would cost you 199.00 Euro + ' + overCharge48.toFixed(2) + ' Euro overchage fees, totalling at <b>' + total48.toFixed(2) + ' Euro</b> <br>' +
 '<br>';
 //'((' + driveDuration + '-' + deductPrePaid + ')*' + driveCost + ')+' + addCost;
 
@@ -160,7 +178,7 @@ I have <input type="number" id="prePaid" size="4" value="0"> pre-paid minutes in
 <br>
 <br>
 <br>
-Prices as of 2017-12-03 / German structure.<br>
+Prices as of 2019-09-15 / German structure.<br>
 The prices are calculated as to my best understanding of the price structure.<br>
 It does not consider the "Savings Packages" as those are reoccurring fees that can only booked once per month.<br>
 If you found an error please create an issue on <a href="https://github.com/roman-mueller/drivenow-calculator">GitHub</a> or send an e-Mail to: drivenow AT rm-it.de<br>
